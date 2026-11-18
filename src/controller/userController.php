@@ -54,11 +54,11 @@ class UserController {
     }
 
     public function submitSubscribe() {
-        $login           = strtolower(trim($_POST['login'] ?? ''));
-        $password        = $_POST['password'] ?? '';
+        $login = strtolower(trim($_POST['login'] ?? ''));
+        $password = $_POST['password'] ?? '';
         $passwordConfirm = $_POST['password_confirm'] ?? '';
-        $name            = trim($_POST['name'] ?? '');
-        $firstname       = trim($_POST['firstname'] ?? '');
+        $name = trim($_POST['name'] ?? '');
+        $firstname = trim($_POST['firstname'] ?? '');
 
         $errors = $this->validate_subscription($login, $password, $passwordConfirm, $name, $firstname);
 
