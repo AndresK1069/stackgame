@@ -9,7 +9,7 @@ $header->render();
 ?>
 
 <header>
-    <?php if (isset($_SESSION['id'])) : ?>
+    <?php if (isset($_SESSION['user_id'])) : ?>
         <a href="/logout">Se déconnecter</a>
         <a href="/profile">Votre profile</a>
     <?php else : ?>
