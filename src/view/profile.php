@@ -15,10 +15,6 @@ $header->render();
 </header>
 
 <main>
-    <header>
-        <a href="/logout">Se déconnecter</a>
-    </header>
-
     <h1>Votre profil : <?= htmlspecialchars($user['firstname']) ?></h1>
 </main>
 
