@@ -23,7 +23,7 @@ $form = new Form(action: "", method: Method::POST, className: "");
 
 $form->addElement(new FormElement(
     name: "login",
-    type: ElementType::EMAIL,
+    type: ElementType::TEXT,
     label: "Email",
     value: $login,
     attributes: ["class" => "input", "required" => true]
