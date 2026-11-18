@@ -23,6 +23,7 @@ require_once __DIR__ . '/../controller/userController.php';
 
 require_once __DIR__ . '/../model/UserModel.php';
 
+session_start();
 
 $routes = require __DIR__ . '/../routes.php';
 $pdo = create_pdo();

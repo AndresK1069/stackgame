@@ -9,8 +9,12 @@ $header->render();
 ?>
 
 <header>
-    <a href="/login">Se connecter</a>
-	<a href="/subscribe">Inscription</a>
+    <?php if (isset($_SESSION['login'])) : ?>
+        <a href="/logout">Se déconnecter</a>
+    <?php else : ?>
+        <a href="/login">Se connecter</a>
+        <a href="/subscribe">Inscription</a>
+    <?php endif; ?>
 </header>
 
 <?php

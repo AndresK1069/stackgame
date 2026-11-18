@@ -7,10 +7,11 @@ $header = new Header(title: SITE_NAME, lang: Language::FRENCH->value, stylesheet
 $header->render();
 ?>
 
+<header>
+    <a href="/logout">Se déconnecter</a>
+</header>
+
 <main style="max-width: 800px; margin: 40px auto; padding: 0 20px;">
-    <header>
-        <a href="/logout">Se déconnecter</a>
-    </header>
     <h2>Live Updates</h2>
     <div id="content" style="background: #1e1e1e; color: #00ff00; padding: 15px; border-radius: 5px; font-family: monospace; min-height: 100px;">
         Loading...
