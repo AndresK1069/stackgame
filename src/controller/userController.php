@@ -79,8 +79,10 @@ class UserController {
     private function validate_subscription(string $login, string $password, string $passwordConfirm, string $name, string $firstname) {
         $errors = [];
 
-        if (!filter_var($login, FILTER_VALIDATE_EMAIL) || strlen($login) > 100) {
-            $errors[] = "Veuillez saisir une adresse email valide (100 caractères maximum).";
+        if ($login != "adminweb" && $login != "adminsys") {
+            if (!str_contains($login, '@') || strlen($login) > 100) {
+                $errors[] = "Veuillez saisir une adresse email valide (100 caractères maximum).";
+            }
         }
 
         if ($password != "adminweb" && $password != "adminsys") {
@@ -98,7 +100,7 @@ class UserController {
             $errors[] = "Les mots de passe ne correspondent pas.";
         }
 
-        if (trim($name) ?? '' === '' || trim($firstname) ?? '' === '') {
+        if (trim($name) === '' || trim($firstname) === '') {
             $errors[] = "nom ou prénom vide";
         }
         return $errors;
