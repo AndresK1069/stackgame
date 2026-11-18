@@ -16,12 +16,12 @@ class UserController {
     }
 
     public function showSubscribe() {
-	    include __DIR__ . "/../view/subscription.php";
+        include __DIR__ . "/../view/subscription.php";
     }
 
     public function submitLogin() {
-        $login = trim($_POST['login']);
-        $pwd = strtoupper($_POST['password']);
+        $login = mb_strtolower(trim($_POST['login'] ?? ''));
+        $pwd = strtoupper($_POST['password'] ?? '');
 
         $user = $this->get_user_from_login_password($login, $pwd);
 
@@ -39,7 +39,7 @@ class UserController {
             else {
                 header('Location: /');
             }
-        } 
+        }
         else {
             header('Location: /login');
         }
@@ -54,18 +54,63 @@ class UserController {
     }
 
     public function submitSubscribe() {
-        $login = trim($_POST['login'] ?? '');
-        $pwd = strtoupper($_POST['password']);
-        $name = trim($_POST['name'] ?? '');
-        $firstname = trim($_POST['firstname'] ?? '');
+        $login           = mb_strtolower(trim($_POST['login'] ?? ''));
+        $password        = $_POST['password'] ?? '';
+        $passwordConfirm = $_POST['password_confirm'] ?? '';
+        $name            = trim($_POST['name'] ?? '');
+        $firstname       = trim($_POST['firstname'] ?? '');
 
-        if ($login === '' || !str_contains($login, "@") || $pwd === '' || $name === '' || $firstname === '') {
-            header('Location: /subscribe');
-            exit;
+        $errors = $this->validate_subscription($login, $password, $passwordConfirm, $name, $firstname);
+
+        if (empty($errors) && $this->user_model->login_exists($login)) {
+            $errors[] = "Un compte existe déjà avec cet email.";
         }
 
-        $this->user_model->add_user($login, $pwd, $name, $firstname);
+        if (empty($errors)) {
+            $pwd = strtoupper($password);
+            if (!$this->user_model->add_user($login, $pwd, $name, $firstname)) {
+                $errors[] = "Un compte existe déjà avec cet email.";
+            }
+        }
+
+        if (!empty($errors)) {
+            include __DIR__ . "/../view/subscription.php";
+            return;
+        }
+
         header('Location: /');
+        exit;
+    }
+
+    private function validate_subscription(string $login, string $password, string $passwordConfirm, string $name, string $firstname): array {
+        $errors = [];
+
+        if (!filter_var($login, FILTER_VALIDATE_EMAIL) || mb_strlen($login) > 100) {
+            $errors[] = "Veuillez saisir une adresse email valide (100 caractères maximum).";
+        }
+
+        if (trim($password) === ''
+            || strlen($password) < 8 || strlen($password) > 72
+            || !preg_match('/[a-z]/', $password)
+            || !preg_match('/[A-Z]/', $password)
+            || !preg_match('/\d/', $password)
+            || !preg_match('/[^a-zA-Z\d]/', $password)) {
+            $errors[] = "Le mot de passe doit contenir de 8 à 72 caractères, avec une minuscule, une majuscule, un chiffre et un caractère spécial.";
+        }
+
+        if (!hash_equals($password, $passwordConfirm)) {
+            $errors[] = "Les mots de passe ne correspondent pas.";
+        }
+
+        $namePattern = "/^[\p{L}][\p{L} '\-]{1,49}$/u";
+        if (!preg_match($namePattern, $name)) {
+            $errors[] = "Le nom est invalide (2 à 50 lettres, espaces, tirets ou apostrophes).";
+        }
+        if (!preg_match($namePattern, $firstname)) {
+            $errors[] = "Le prénom est invalide (2 à 50 lettres, espaces, tirets ou apostrophes).";
+        }
+
+        return $errors;
     }
 
     private function get_user_from_login_password(string $login, string $password) {
