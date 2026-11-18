@@ -12,18 +12,18 @@ class UserController {
     }
 
     public function showLogin() {
-        include __DIR__ . "/../view/connect_page.php";
+        include __DIR__ . "/../view/authentification.php";
     }
 
     public function showSubscribe() {
-	include __DIR__ . "/../view/subscription.php";
+	    include __DIR__ . "/../view/subscription.php";
     }
 
     public function submitLogin() {
-        $login = trim($_POST['login'] ?? '');
-        $password = $_POST['password'] ?? '';
+        $login = trim($_POST['login']);
+        $pwd = strtoupper($_POST['password']);
 
-        $user = $this->get_user_from_login_password($login, $password);
+        $user = $this->get_user_from_login_password($login, $pwd);
 
         if ($user != null) {
             session_start();
@@ -31,7 +31,7 @@ class UserController {
             $_SESSION['user_id'] = $user['id'];
 
             if ($user['login'] == "adminsys") {
-                include __DIR__ . "/../view/adminsys_page.php";
+                include __DIR__ . "/../view/adminsys.php";
             }
             else if ($user['login'] == "adminweb") {
                 include __DIR__ . "/../view/stats.php";
@@ -55,10 +55,16 @@ class UserController {
 
     public function submitSubscribe() {
         $login = trim($_POST['login'] ?? '');
-        $password = $_POST['password'] ?? '';
-        $name = $_POST['name'] ?? '';
-        $firstname = $_POST['firstname'] ?? '';
-        $this->user_model->add_user($login, $password, $name, $firstname);
+        $pwd = strtoupper($_POST['password']);
+        $name = trim($_POST['name'] ?? '');
+        $firstname = trim($_POST['firstname'] ?? '');
+
+        if ($login === '' || $pwd === '' || $name === '' || $firstname === '') {
+            header('Location: /subscribe');
+            exit;
+        }
+
+        $this->user_model->add_user($login, $pwd, $name, $firstname);
         header('Location: /');
     }
 
