@@ -32,8 +32,7 @@ class UserModel {
             if ($e->getCode() === '23000') {
                 return false;
             }
-            print($e->getMessage());
-            die();
+            throw new RuntimeException('Unable to create the account.', 0, $e);
         }
     }
 

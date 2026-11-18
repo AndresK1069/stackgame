@@ -20,8 +20,8 @@ class UserController {
     }
 
     public function submitLogin() {
-        $login = mb_strtolower(trim($_POST['login'] ?? ''));
-        $pwd = strtoupper($_POST['password'] ?? '');
+        $login = strtolower(trim($_POST['login'] ?? ''));
+        $pwd = $_POST['password'] ?? '';
 
         $user = $this->get_user_from_login_password($login, $pwd);
 
@@ -54,7 +54,7 @@ class UserController {
     }
 
     public function submitSubscribe() {
-        $login           = mb_strtolower(trim($_POST['login'] ?? ''));
+        $login           = strtolower(trim($_POST['login'] ?? ''));
         $password        = $_POST['password'] ?? '';
         $passwordConfirm = $_POST['password_confirm'] ?? '';
         $name            = trim($_POST['name'] ?? '');
@@ -62,15 +62,19 @@ class UserController {
 
         $errors = $this->validate_subscription($login, $password, $passwordConfirm, $name, $firstname);
 
-        if (empty($errors) && $this->user_model->login_exists($login)) {
-            $errors[] = "Un compte existe déjà avec cet email.";
-        }
-
-        if (empty($errors)) {
-            $pwd = strtoupper($password);
-            if (!$this->user_model->add_user($login, $pwd, $name, $firstname)) {
+        try {
+            if (empty($errors) && $this->user_model->login_exists($login)) {
                 $errors[] = "Un compte existe déjà avec cet email.";
             }
+
+            if (empty($errors)) {
+                if (!$this->user_model->add_user($login, $password, $name, $firstname)) {
+                    $errors[] = "Un compte existe déjà avec cet email.";
+                }
+            }
+        }
+        catch (RuntimeException | PDOException $e) {
+            $errors[] = "La création du compte est temporairement indisponible.";
         }
 
         if (!empty($errors)) {
@@ -85,7 +89,7 @@ class UserController {
     private function validate_subscription(string $login, string $password, string $passwordConfirm, string $name, string $firstname): array {
         $errors = [];
 
-        if (!filter_var($login, FILTER_VALIDATE_EMAIL) || mb_strlen($login) > 100) {
+        if (!filter_var($login, FILTER_VALIDATE_EMAIL) || strlen($login) > 100) {
             $errors[] = "Veuillez saisir une adresse email valide (100 caractères maximum).";
         }
 

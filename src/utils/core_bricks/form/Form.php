@@ -50,13 +50,29 @@ class Form
                 ));
             }
 
-            write_line(sprintf(
-                '  <input id="%s" type="%s" name="%s" value="%s">',
-                $element->id,
-                $element->type->value,
-                htmlspecialchars($element->name),
-                htmlspecialchars($element->value)
-            ));
+            $attributes = [
+                'id' => $element->id,
+                'type' => $element->type->value,
+                'name' => $element->name,
+                'value' => $element->value,
+            ];
+            $attributes = array_merge($attributes, $element->attributes);
+
+            $renderedAttributes = [];
+            foreach ($attributes as $attributeName => $attributeValue) {
+                $escapedName = htmlspecialchars((string) $attributeName, ENT_QUOTES, 'UTF-8');
+                if ($attributeValue === true) {
+                    $renderedAttributes[] = $escapedName;
+                } else if ($attributeValue !== false && $attributeValue !== null) {
+                    $renderedAttributes[] = sprintf(
+                        '%s="%s"',
+                        $escapedName,
+                        htmlspecialchars((string) $attributeValue, ENT_QUOTES, 'UTF-8')
+                    );
+                }
+            }
+
+            write_line('  <input ' . implode(' ', $renderedAttributes) . '>');
         }
 
         write_line('</form>');
