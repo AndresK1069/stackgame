@@ -2,24 +2,21 @@
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../utils/ui_bricks/header.php';
 require_once __DIR__ . '/../utils/ui_bricks/footer.php';
-require_once __DIR__ . '/../utils/ui_bricks/NavItem.php';
 
 $header = new Header(title: SITE_NAME, lang: Language::FRENCH->value, stylesheet: BASE_URL . '/assets/style.css');
 $header->render();
 
-$navbar = new Navbar("navbar");
-if (isset($_SESSION['login'])) {
-    $navbar->addItem(new NavItem("/logout", "Se déconnecter"));
-}
 ?>
 
-    <header>
-        <?php $navbar->render(); ?>
-    </header>
+<header>
+    <?php if (isset($_SESSION['user_id'])) : ?>
+        <a href="/logout">Se déconnecter</a>
+    <?php endif; ?>
+</header>
 
-    <main>
-        <h1>Votre profil : <?= htmlspecialchars($user['firstname']) ?></h1>
-    </main>
+<main>
+    <h1>Votre profil : <?= htmlspecialchars($user['firstname']) ?></h1>
+</main>
 
 <?php
 $footer = new Footer(copyrightText: "StackGame", year: 2026, className: "site-footer");
