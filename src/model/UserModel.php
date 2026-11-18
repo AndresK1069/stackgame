@@ -8,19 +8,12 @@ class UserModel {
 
     public function get_user_from_login_password(string $login, string $password): ?array
     {
-        try {
-            $req = $this->pdo->prepare('select id, login, password from users where login = :login and password = :password');
-            $req->bindValue(':login', $login, PDO::PARAM_STR);
-            $req->bindValue(':password', $password, PDO::PARAM_STR);
-            $req->execute();
+        $req = $this->pdo->prepare('select id, login, password from users where login = :login');
+        $req->bindValue(':login', $login, PDO::PARAM_STR);
+        $req->execute();
 
-            $user = $req->fetch(PDO::FETCH_ASSOC);
-            return $user === false ? null : $user;
-        }
-        catch (PDOException $e) {
-            print($e->getMessage());
-            die();
-        }
+        $user = $req->fetch(PDO::FETCH_ASSOC);
+        return ($user && password_verify($password, $user['password'])) ? $user : null;
     }
 
     public function add_user(string $login, string $password, string $name, string $firstname) {
@@ -39,5 +32,14 @@ class UserModel {
             die();
         }
     }
+    public function login_exists(string $login): bool
+    {
+        $req = $this->pdo->prepare('select 1 from users where login = :login limit 1');
+        $req->bindValue(':login', $login, PDO::PARAM_STR);
+        $req->execute();
+        return $req->fetchColumn() !== false;
+    }
+
+
 }
 ?>
