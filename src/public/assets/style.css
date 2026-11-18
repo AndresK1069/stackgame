@@ -313,11 +313,79 @@ button:focus-visible,
     list-style: none;
     padding: 0;
     margin: 20px 0;
-    width: 220px;
     background: #252525;
-    border: 2px solid #535353;
-    border-radius: 15px;
-    overflow: hidden;
+    display: flex;
+    align-items: center;
+    width: 100%;
 }
 
-.navbar
+.navbar li {
+    margin: 0;
+}
+
+.navbar li:last-child {
+    margin-left: auto;
+}
+
+.navbar a {
+    display: block;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 14px 20px;
+    text-decoration: none;
+    font-family: inherit;
+    font-size: 1.05rem;
+    font-weight: bold;
+    transition: background 0.2s;
+}
+
+.navbar a:hover {
+    background: #111111;
+}
+
+.navbar a.active,
+.navbar li.active a {
+    background: #006B45;
+}
+
+.navbar a:focus-visible {
+    outline: 3px solid #FFBF47;
+    outline-offset: -3px;
+}
+
+@media (max-width: 600px) {
+    body {
+        padding: 18px;
+    }
+
+    h1 {
+        font-size: 1.9rem;
+    }
+
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    main {
+        margin: 20px auto;
+    }
+
+    input,
+    select,
+    textarea {
+        min-height: 45px;
+    }
+
+    table {
+        font-size: 0.85rem;
+    }
+
+    th,
+    td {
+        padding: 10px 8px;
+    }
+
+    header {
+        flex-wrap: wrap;
+    }
+}
