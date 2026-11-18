@@ -64,7 +64,7 @@ body > h2 {
     padding: 30px;
 }
 
-.optionlinks a{
+.optionlinks a {
     font-size: 1.15rem;
     display: block;
     padding: 10px;
@@ -309,88 +309,15 @@ button:focus-visible,
     outline-offset: 3px;
 }
 
-/* --- Navbar Styles Added Here --- */
 .navbar {
     list-style: none;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 15px;
     padding: 0;
-    margin: 20px auto;
-    justify-content: center;
-    align-items: center;
-    max-width: 650px;
-    width: 100%;
-}
-
-.navbar li {
-    margin: 0;
-}
-
-.navbar a {
-    display: inline-block;
-    padding: 12px 24px;
-    background: #303030;
+    margin: 20px 0;
+    width: 220px;
+    background: #252525;
     border: 2px solid #535353;
-    border-radius: 30px;
-    color: #FFFFFF;
-    font-family: inherit;
-    font-size: 1.05rem;
-    font-weight: bold;
-    text-align: center;
-    text-decoration: none;
-    transition: background 0.2s, border-color 0.2s, color 0.2s, transform 0.2s;
+    border-radius: 15px;
+    overflow: hidden;
 }
 
-.navbar a:hover {
-    background: #006B45;
-    border-color: #006B45;
-    color: #FFFFFF;
-    transform: translateY(-2px);
-}
-
-.navbar a:active {
-    transform: scale(0.98);
-}
-
-.navbar a:focus-visible {
-    outline: 3px solid #FFBF47;
-    outline-offset: 3px;
-}
-
-@media (max-width: 600px) {
-    body {
-        padding: 18px;
-    }
-
-    h1 {
-        font-size: 1.9rem;
-    }
-
-    h2 {
-        font-size: 1.4rem;
-    }
-
-    main {
-        margin: 20px auto;
-    }
-
-    input,
-    select,
-    textarea {
-        min-height: 45px;
-    }
-
-    table {
-        font-size: 0.85rem;
-    }
-
-    th,
-    td {
-        padding: 10px 8px;
-    }
-
-    header {
-        flex-wrap: wrap;
-    }
-}
+.navbar
