@@ -1,0 +1,54 @@
+# ==========================================
+# Application Logs & Temporary Files
+# ==========================================
+/src/logs/*.json
+/src/runtime/*.flag
+/src/logs/*.log
+*.log
+
+# ==========================================
+# Environment & Sensitive Configuration
+# ==========================================
+.env
+.env.local
+.env.*.local
+config.local.php
+
+# ==========================================
+# Dependency Manager (Composer)
+# ==========================================
+/vendor/
+
+# ==========================================
+# IDE & Editor Files
+# ==========================================
+# IntelliJ IDEA / PHPStorm
+.idea/
+*.iws
+*.iml
+*.ipr
+out/
+
+# VS Code
+.vscode/
+*.code-workspace
+
+# Sublimetext
+*.sublime-project
+*.sublime-workspace
+
+# ==========================================
+# Operating System & Server Files
+# ==========================================
+# Windows
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+
+# Local Web Server / XAMPP specific
+/nbproject/
