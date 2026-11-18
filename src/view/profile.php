@@ -2,16 +2,19 @@
 require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../utils/ui_bricks/header.php';
 require_once __DIR__ . '/../utils/ui_bricks/footer.php';
+require_once __DIR__ . '/../utils/ui_bricks/NavItem.php';
 
 $header = new Header(title: SITE_NAME, lang: Language::FRENCH->value, stylesheet: BASE_URL . '/assets/style.css');
 $header->render();
 
+$navbar = new Navbar("navbar");
+if (isset($_SESSION['user_id'])) {
+    $navbar->addItem(new NavItem("/logout", "Se déconnecter"));
+}
 ?>
 
 <header>
-    <?php if (isset($_SESSION['user_id'])) : ?>
-        <a href="/logout">Se déconnecter</a>
-    <?php endif; ?>
+    <?php $navbar->render(); ?>
 </header>
 
 <main>
