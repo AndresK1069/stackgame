@@ -6,10 +6,12 @@ class UserModel {
         $this->pdo = $pdo;
     }
 
-    public function get_user_from_login_password(string $login, string $password): ?array
+    public function get_user_from_login_password(string $login, string $password)
     {
-        $req = $this->pdo->prepare('select id, login, password from users where login = :login');
+        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $req = $this->pdo->prepare('select id, login, password from users where login = :login and password = :password');
         $req->bindValue(':login', $login, PDO::PARAM_STR);
+        $req->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
         $req->execute();
 
         $user = $req->fetch(PDO::FETCH_ASSOC);
