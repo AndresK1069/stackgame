@@ -1,7 +1,5 @@
 <?php
 
-require_once __DIR__.'/../utils.php';
-
 use function Utils\write_line;
 
 class NavItem
