@@ -59,7 +59,7 @@ class UserController {
         $name = trim($_POST['name'] ?? '');
         $firstname = trim($_POST['firstname'] ?? '');
 
-        if ($login === '' || $pwd === '' || $name === '' || $firstname === '') {
+        if ($login === '' || !str_contains($login, "@") || $pwd === '' || $name === '' || $firstname === '') {
             header('Location: /subscribe');
             exit;
         }
