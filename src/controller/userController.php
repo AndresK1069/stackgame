@@ -12,7 +12,7 @@ class UserController {
     }
 
     public function showLogin() {
-        include __DIR__ . "/../view/connect_page.php";
+        include __DIR__ . "/../view/authentification.php";
     }
 
     public function showSubscribe() {
@@ -31,7 +31,7 @@ class UserController {
             $_SESSION['user_id'] = $user['id'];
 
             if ($user['login'] == "adminsys") {
-                include __DIR__ . "/../view/adminsys_page.php";
+                include __DIR__ . "/../view/adminsys.php";
             }
             else if ($user['login'] == "adminweb") {
                 include __DIR__ . "/../view/stats.php";
