@@ -11,11 +11,16 @@ $header->render();
 <header>
     <?php if (isset($_SESSION['login'])) : ?>
         <a href="/logout">Se déconnecter</a>
-    <?php else : ?>
-        <a href="/login">Se connecter</a>
-        <a href="/subscribe">Inscription</a>
     <?php endif; ?>
 </header>
+
+<main>
+    <header>
+        <a href="/logout">Se déconnecter</a>
+    </header>
+
+    <h1>Votre profil : <?= htmlspecialchars($user['firstname']) ?></h1>
+</main>
 
 <?php
 $footer = new Footer(copyrightText: "StackGame", year: 2026, className: "site-footer");

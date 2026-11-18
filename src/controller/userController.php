@@ -19,6 +19,16 @@ class UserController {
         include __DIR__ . "/../view/subscription.php";
     }
 
+    public function showProfile() {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /');
+            exit;
+        }
+
+        $user = $this->user_model->get_user_from_id($_SESSION['user_id']);
+        include __DIR__ . "/../view/profile.php";
+    }
+
     public function submitLogin() {
         $login = strtolower(trim($_POST['login'] ?? ''));
         $pwd = $_POST['password'] ?? '';
@@ -29,6 +39,7 @@ class UserController {
             session_start();
             session_regenerate_id(true);
             $_SESSION['user_id'] = $user['id'];
+            $_SESSION['user_pwd'] = $user['password'];
 
             if ($user['login'] == "adminsys") {
                 include __DIR__ . "/../view/adminsys.php";

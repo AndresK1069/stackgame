@@ -11,6 +11,7 @@ $header->render();
 <header>
     <?php if (isset($_SESSION['login'])) : ?>
         <a href="/logout">Se déconnecter</a>
+        <a href="/profile">Votre profile</a>
     <?php else : ?>
         <a href="/login">Se connecter</a>
         <a href="/subscribe">Inscription</a>
