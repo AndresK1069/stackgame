@@ -105,15 +105,6 @@ class UserController {
         if (!hash_equals($password, $passwordConfirm)) {
             $errors[] = "Les mots de passe ne correspondent pas.";
         }
-
-        $namePattern = "/^[\p{L}][\p{L} '\-]{1,49}$/u";
-        if (!preg_match($namePattern, $name)) {
-            $errors[] = "Le nom est invalide (2 à 50 lettres, espaces, tirets ou apostrophes).";
-        }
-        if (!preg_match($namePattern, $firstname)) {
-            $errors[] = "Le prénom est invalide (2 à 50 lettres, espaces, tirets ou apostrophes).";
-        }
-
         return $errors;
     }
 
