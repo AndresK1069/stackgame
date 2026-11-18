@@ -16,14 +16,14 @@ class UserController {
     }
 
     public function showSubscribe() {
-	include __DIR__ . "/../view/subscription.php";
+	    include __DIR__ . "/../view/subscription.php";
     }
 
     public function submitLogin() {
-        $login = trim($_POST['login'] ?? '');
-        $password = $_POST['password'] ?? '';
+        $login = trim($_POST['login']);
+        $hashed_pwd = strtoupper(md5($_POST['password']));
 
-        $user = $this->get_user_from_login_password($login, $password);
+        $user = $this->get_user_from_login_password($login, $hashed_pwd);
 
         if ($user != null) {
             session_start();
@@ -54,11 +54,12 @@ class UserController {
     }
 
     public function submitSubscribe() {
-        $login = trim($_POST['login'] ?? '');
-        $password = $_POST['password'] ?? '';
-        $name = $_POST['name'] ?? '';
-        $firstname = $_POST['firstname'] ?? '';
-        $this->user_model->add_user($login, $password, $name, $firstname);
+        $login = trim($_POST['login']);
+        $hashed_pwd = strtoupper(md5($_POST['password']));
+        $name = $_POST['name'];
+        $firstname = $_POST['firstname'];
+
+        $this->user_model->add_user($login, $hashed_pwd, $name, $firstname);
         header('Location: /');
     }
 
