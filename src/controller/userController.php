@@ -21,9 +21,9 @@ class UserController {
 
     public function submitLogin() {
         $login = trim($_POST['login']);
-        $hashed_pwd = strtoupper(md5($_POST['password']));
+        $pwd = strtoupper($_POST['password']);
 
-        $user = $this->get_user_from_login_password($login, $hashed_pwd);
+        $user = $this->get_user_from_login_password($login, $pwd);
 
         if ($user != null) {
             session_start();
@@ -54,12 +54,17 @@ class UserController {
     }
 
     public function submitSubscribe() {
-        $login = trim($_POST['login']);
-        $hashed_pwd = strtoupper(md5($_POST['password']));
-        $name = $_POST['name'];
-        $firstname = $_POST['firstname'];
+        $login = trim($_POST['login'] ?? '');
+        $pwd = strtoupper($_POST['password']);
+        $name = trim($_POST['name'] ?? '');
+        $firstname = trim($_POST['firstname'] ?? '');
 
-        $this->user_model->add_user($login, $hashed_pwd, $name, $firstname);
+        if ($login === '' || $pwd === '' || $name === '' || $firstname === '') {
+            header('Location: /subscribe');
+            exit;
+        }
+
+        $this->user_model->add_user($login, $pwd, $name, $firstname);
         header('Location: /');
     }
 
