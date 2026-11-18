@@ -7,11 +7,11 @@ $header = new Header(title: SITE_NAME, lang: Language::FRENCH->value, stylesheet
 $header->render();
 ?>
 
-<main>
-    <header>
-        <a href="/logout">Se déconnecter</a>
-    </header>
+<header>
+    <a href="/logout">Se déconnecter</a>
+</header>
 
+<main>
     <h1>Statistiques d'utilisation</h1>
 
     <table>
