@@ -8,7 +8,7 @@ class UserModel {
 
     public function get_user_from_login_password(string $login, string $password): ?array
     {
-        $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+        $hashedPassword = strtoupper(md5($password));
         $req = $this->pdo->prepare('select id, login, password from users where login = :login and password = :password');
         $req->bindValue(':login', $login, PDO::PARAM_STR);
         $req->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
@@ -20,7 +20,7 @@ class UserModel {
 
     public function add_user(string $login, string $password, string $name, string $firstname): bool {
         try {
-            $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
+            $hashedPassword = strtoupper(md5($password));
             $req = $this->pdo->prepare('insert into users (login, password, name, firstname, type_user) values (:login, :password, :name, :firstname, :user);');
             $req->bindValue(':login', $login, PDO::PARAM_STR);
             $req->bindValue(':password', $hashedPassword, PDO::PARAM_STR);
