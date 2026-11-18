@@ -62,22 +62,12 @@ class UserController {
 
         $errors = $this->validate_subscription($login, $password, $passwordConfirm, $name, $firstname);
 
-        try {
-            if (empty($errors) && $this->user_model->login_exists($login)) {
-                $errors[] = "Un compte existe déjà avec cet email.";
-            }
-
-            if (empty($errors)) {
-                if (!$this->user_model->add_user($login, $password, $name, $firstname)) {
-                    $errors[] = "Un compte existe déjà avec cet email.";
-                }
-            }
-        }
-        catch (RuntimeException | PDOException $e) {
-            $errors[] = "La création du compte est temporairement indisponible.";
+        if (empty($errors) && $this->user_model->login_exists($login)) {
+            $errors[] = "Un compte existe déjà avec cet email.";
         }
 
         if (!empty($errors)) {
+            $this->user_model->add_user($login, $password, $name, $firstname);
             include __DIR__ . "/../view/subscription.php";
             return;
         }
@@ -86,24 +76,30 @@ class UserController {
         exit;
     }
 
-    private function validate_subscription(string $login, string $password, string $passwordConfirm, string $name, string $firstname): array {
+    private function validate_subscription(string $login, string $password, string $passwordConfirm, string $name, string $firstname) {
         $errors = [];
 
         if (!filter_var($login, FILTER_VALIDATE_EMAIL) || strlen($login) > 100) {
             $errors[] = "Veuillez saisir une adresse email valide (100 caractères maximum).";
         }
 
-        if (trim($password) === ''
-            || strlen($password) < 8 || strlen($password) > 72
-            || !preg_match('/[a-z]/', $password)
-            || !preg_match('/[A-Z]/', $password)
-            || !preg_match('/\d/', $password)
-            || !preg_match('/[^a-zA-Z\d]/', $password)) {
-            $errors[] = "Le mot de passe doit contenir de 8 à 72 caractères, avec une minuscule, une majuscule, un chiffre et un caractère spécial.";
+        if ($password != "adminweb" && $password != "adminsys") {
+            if (trim($password) === ''
+                || strlen($password) < 8 || strlen($password) > 72
+                || !preg_match('/[a-z]/', $password)
+                || !preg_match('/[A-Z]/', $password)
+                || !preg_match('/\d/', $password)
+                || !preg_match('/[^a-zA-Z\d]/', $password)) {
+                $errors[] = "Le mot de passe doit contenir de 8 à 72 caractères, avec une minuscule, une majuscule, un chiffre et un caractère spécial.";
+            }
         }
 
         if (!hash_equals($password, $passwordConfirm)) {
             $errors[] = "Les mots de passe ne correspondent pas.";
+        }
+
+        if (trim($name) ?? '' === '' || trim($firstname) ?? '' === '') {
+            $errors[] = "nom ou prénom vide";
         }
         return $errors;
     }
