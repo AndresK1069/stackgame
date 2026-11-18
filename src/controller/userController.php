@@ -67,11 +67,11 @@ class UserController {
         }
 
         if (!empty($errors)) {
-            $this->user_model->add_user($login, $password, $name, $firstname);
             include __DIR__ . "/../view/subscription.php";
             return;
         }
 
+        $this->user_model->add_user($login, $password, $name, $firstname);
         header('Location: /');
         exit;
     }
