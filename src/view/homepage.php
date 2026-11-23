@@ -12,6 +12,7 @@ $navbar = new Navbar("navbar");
 if (isset($_SESSION['user_id'])) {
     $navbar->addItem(new NavItem("/logout", "Se déconnecter"));
     $navbar->addItem(new NavItem("/profile", "Votre profile"));
+    $navbar->addItem(new NavItem("/escape-iut", "Escape Game IUT"));
 } else {
     $navbar->addItem(new NavItem("/login", "Se connecter"));
     $navbar->addItem(new NavItem("/subscribe", "Inscription"));
@@ -21,6 +22,12 @@ if (isset($_SESSION['user_id'])) {
     <header>
         <?php $navbar->render(); ?>
     </header>
+
+<?php if (isset($_SESSION['user_id'])): ?>
+    <main>
+        <p><a href="/escape-iut">Lancer le mini escape game (Plan de l'IUT)</a></p>
+    </main>
+<?php endif; ?>
 
 <?php
 $footer = new Footer(copyrightText: "StackGame", year: 2026, className: "site-footer");

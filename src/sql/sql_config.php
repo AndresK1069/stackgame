@@ -3,7 +3,7 @@ return [
     'host'    => 'localhost',
     'name'    => 'stackgame_bd',
     'user'    => 'root',
-    'pass'    => '!sae26!',
+    'pass'    => '',
     'charset' => 'utf8mb4',
     'https'   => false,
 ];
