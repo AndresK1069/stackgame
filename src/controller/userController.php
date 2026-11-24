@@ -120,5 +120,14 @@ class UserController {
     private function get_user_from_login_password(string $login, string $password) {
         return $this->user_model->get_user_from_login_password($login, $password);
     }
+
+    public function showEscapeGame(): void{
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        require __DIR__ . '/../public/escape-iut.html';
+    }
 }
 ?>

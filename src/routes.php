@@ -6,6 +6,7 @@ return [
         '/logout' => ['UserController', 'submitLogout'],
         '/subscribe' => ['UserController', 'showSubscribe'],
         '/profile' => ['UserController', 'showProfile'],
+        '/escape-iut' => ['UserController', 'showEscapeGame'],
     ],
     'POST' => [
         '/login' => ['UserController', 'submitLogin'],
