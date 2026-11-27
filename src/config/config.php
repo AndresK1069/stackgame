@@ -4,6 +4,10 @@ const SITE_NAME = 'Stack Games';
 const CHARSET = 'UTF-8';
 const BASE_URL = '';
 
+const RECAPTCHA_SITE_KEY = '6LeCBzUuAAAAAIcrdChuCj2NtET7v2EFBIYA-Qz8';
+const RECAPTCHA_SECRET = '6LeCBzUuAAAAALR3lWxk_opmkWYtx-_GerGUHS_h';
+
+
 enum Language: string {
     case FRENCH = 'fr';
     case ENGLISH = 'en';

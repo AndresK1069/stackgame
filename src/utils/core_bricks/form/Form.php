@@ -42,6 +42,12 @@ class Form
         ));
 
         foreach ($this->formElements as $element) {
+
+            if ($element->type === ElementType::HTML) {
+                write_line('  ' . $element->value);
+                continue;
+            }
+
             if (!empty($element->label)) {
                 write_line(sprintf(
                     '  <label for="%s">%s</label>',

@@ -10,6 +10,7 @@ enum ElementType: string
     case SUBMIT = "submit";
     case TEXTAREA = "textarea";
     case SELECT = "select";
+    case HTML = 'html';
 }
 
 class FormElement
