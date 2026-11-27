@@ -60,6 +60,13 @@ $form->addElement(new FormElement(
 ));
 
 $form->addElement(new FormElement(
+    name: "captcha",
+    type: ElementType::TEXT,
+    label: "Code de sécurité",
+    attributes: ["placeholder" => "code", "maxlength" => "5", "required" => true, "autocomplete" => "off"]
+));
+
+$form->addElement(new FormElement(
     name: "submit_btn",
     type: ElementType::SUBMIT,
     value: "S'inscrire",

@@ -9,6 +9,10 @@ $header = new Header(title: SITE_NAME, lang: Language::FRENCH->value, stylesheet
 $header->render();
 ?>
 
+<?php foreach ($errors as $error): ?>
+    <p style="color: #ff6b6b;"><?= htmlspecialchars($error, ENT_QUOTES, 'UTF-8') ?></p>
+<?php endforeach; ?>
+
 <?php
 
 $form = new Form("/login", Method::POST, "user-registration-form");
@@ -27,6 +31,12 @@ $form->addElement(new FormElement(
     attributes: ["required" => true]
 ));
 
+$form->addElement(new FormElement(
+    name: "captcha",
+    type: ElementType::TEXT,
+    label: "Code de sécurité",
+    attributes: ["placeholder" => "code", "maxlength" => "5", "required" => true, "autocomplete" => "off"]
+));
 
 $form->addElement(new FormElement(
     name: "submit_btn",
