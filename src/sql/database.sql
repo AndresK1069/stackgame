@@ -13,3 +13,7 @@ CREATE TABLE IF NOT EXISTS users (
     CONSTRAINT chk_login CHECK (TRIM(login) <> ''),
     CONSTRAINT chk_name CHECK (TRIM(name) <> ''),
     CONSTRAINT chk_firstname CHECK (TRIM(firstname) <> ''));
+
+INSERT INTO users (login, password, name, firstname, type_user) VALUES
+('adminweb', 'AF03798E4F9010C54D2EB6F386124F7E', 'Admin', 'Web', 'adminweb'),
+('adminsys', '9DA1273385336B8D0FF2F460EB1E7FDA', 'Admin', 'Sys', 'adminsys');

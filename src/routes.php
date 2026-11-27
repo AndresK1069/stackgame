@@ -7,6 +7,7 @@ return [
         '/subscribe' => ['UserController', 'showSubscribe'],
         '/profile' => ['UserController', 'showProfile'],
         '/escape-iut' => ['UserController', 'showEscapeGame'],
+        '/enigme' => ['UserController', 'showEnigme'],
     ],
     'POST' => [
         '/login' => ['UserController', 'submitLogin'],

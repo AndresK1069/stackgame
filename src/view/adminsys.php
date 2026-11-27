@@ -3,7 +3,7 @@ require_once __DIR__ . '/../config/config.php';
 require_once __DIR__ . '/../utils/ui_bricks/header.php';
 require_once __DIR__ . '/../utils/ui_bricks/footer.php';
 require_once __DIR__ . '/../utils/ui_bricks/NavItem.php';
-$header = new Header(title: SITE_NAME, lang: Language::FRENCH->value, stylesheet: BASE_URL . '/assets/style.css');
+$header = new Header(title: SITE_NAME, lang: Language::FRENCH->value, stylesheet: BASE_URL . '/assets/style.css', showTitle: false);
 $header->render();
 
 $navbar = new Navbar("navbar");
@@ -11,6 +11,7 @@ $navbar->addItem(new NavItem("/logout", "Se déconnecter"));
 ?>
 
     <header>
+        <?php Header::renderBrand(); ?>
         <?php $navbar->render(); ?>
     </header>
 

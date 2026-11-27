@@ -36,7 +36,6 @@ class UserController {
         $user = $this->get_user_from_login_password($login, $pwd);
 
         if ($user != null) {
-            session_start();
             session_regenerate_id(true);
             $_SESSION['user_id'] = $user['id'];
             $_SESSION['user_pwd'] = $user['password'];
@@ -121,13 +120,25 @@ class UserController {
         return $this->user_model->get_user_from_login_password($login, $password);
     }
 
-    public function showEscapeGame(): void{
+    public function showEscapeGame(): void {
         if (!isset($_SESSION['user_id'])) {
             header('Location: /login');
             exit;
         }
 
-        require __DIR__ . '/../public/escape-iut.html';
+        include __DIR__ . "/../view/escape_iut.php";
+    }
+
+    public function showEnigme(): void {
+        if (!isset($_SESSION['user_id'])) {
+            header('Location: /login');
+            exit;
+        }
+
+        $allowedZones = ['ba1', 'ba2', 'ba3', 'ba4', 'ba5', 'ba6', 'ba7', 'ba8'];
+        $zone = in_array($_GET['zone'] ?? '', $allowedZones, true) ? $_GET['zone'] : 'ba1';
+
+        include __DIR__ . "/../view/enigme.php";
     }
 }
 ?>

@@ -568,3 +568,257 @@ body > div {
         transform: none;
     }
 }
+
+/* ==========================================================
+   Escape Game IUT + Énigmes
+   ========================================================== */
+
+:root {
+    --danger:       #FF8A80;
+    --success-bg:   rgba(0, 107, 69, 0.25);
+}
+
+/* ----- Page escape-iut ----- */
+main.escape-game {
+    width: min(100% - (var(--gutter) * 2), var(--wide));
+}
+
+.escape-progress {
+    text-align: center;
+}
+
+.escape-layout {
+    display: flex;
+    justify-content: center;
+}
+
+.escape-plan {
+    flex: 0 1 873px;
+    min-width: 0;
+}
+
+.escape-plan img {
+    box-shadow: 0 0 0 1px var(--border);
+}
+
+/* Popup d'énigme */
+.escape-dialog {
+    width: min(94vw, 720px);
+    max-width: none;
+    height: min(90vh, 680px);
+    padding: 0;
+    border: 1px solid var(--border-strong);
+    border-radius: var(--radius-lg);
+    background: var(--surface);
+    color: var(--text);
+    overflow: hidden;
+}
+
+.escape-dialog[open] {
+    display: flex;
+    flex-direction: column;
+}
+
+.escape-dialog::backdrop {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.escape-dialog-bar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    padding: 8px 16px;
+    border-bottom: 1px solid var(--border);
+}
+
+.escape-dialog-bar h2 {
+    margin: 0;
+    font-size: 1.2rem;
+    text-align: left;
+}
+
+.escape-close {
+    min-height: 40px;
+    padding: 6px 16px;
+    margin: 0;
+    background: var(--surface-2);
+    border-color: var(--border-strong);
+}
+
+.escape-dialog iframe {
+    flex: 1;
+    width: 100%;
+    border: 0;
+    background: var(--bg);
+}
+
+.escape-victory {
+    margin-top: 24px;
+    padding: 16px;
+    background: var(--success-bg);
+    border: 1px solid var(--brand);
+    border-radius: var(--radius-md);
+    text-align: center;
+}
+
+.escape-victory[hidden] {
+    display: none;
+}
+
+/* ----- Page enigme (affichée dans l'iframe) ----- */
+main.enigme {
+    width: 100%;
+    margin: 0;
+    padding: 12px var(--gutter);
+}
+
+main.enigme h2 {
+    text-align: left;
+    margin-bottom: 12px;
+}
+
+main.enigme form {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+    padding: 16px;
+    margin: 12px 0;
+}
+
+main.enigme form input {
+    flex: 1 1 100%;
+}
+
+main.enigme form button {
+    flex: 1 1 140px;
+    width: auto;
+    margin: 0;
+}
+
+.enigme-timer {
+    font-weight: 700;
+    color: var(--danger);
+    margin-bottom: 10px;
+}
+
+.enigme-msg {
+    font-weight: 700;
+}
+
+/* ==========================================================
+   Logo / identité visuelle
+   ========================================================== */
+
+/* Barre du haut : logo + nom à gauche, menu à droite */
+header a.brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+    margin-right: auto;
+    font-size: 1.15rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+.brand-logo {
+    width: 44px;
+    height: 44px;
+    border-radius: 10px;
+    box-shadow: 0 0 0 1px var(--border);
+}
+
+/* Pages sans barre (connexion, inscription) : grand logo centré au-dessus du titre */
+.brand-hero {
+    margin-top: 40px;
+}
+
+.brand-hero a {
+    display: inline-block;
+}
+
+.brand-hero-logo {
+    width: 140px;
+    height: 140px;
+    margin: 0 auto;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 0 1px var(--border), 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.brand-hero h1 {
+    margin: 20px 0 0;
+}
+
+/* Accueil */
+.hero {
+    text-align: center;
+    margin-bottom: 36px;
+}
+
+.hero-logo {
+    width: 160px;
+    height: 160px;
+    margin: 0 auto 20px;
+    border-radius: var(--radius-lg);
+    box-shadow: 0 0 0 1px var(--border), 0 12px 32px rgba(0, 0, 0, 0.35);
+}
+
+.hero h1 {
+    margin: 0 0 8px;
+}
+
+.hero .description {
+    margin-bottom: 0;
+}
+
+.hero-cta {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 12px;
+}
+
+.hero-cta .classic-button {
+    margin: 0;
+}
+
+.classic-button-secondary,
+.classic-button-secondary:link,
+.classic-button-secondary:visited {
+    background: transparent;
+    border-color: var(--border-strong);
+}
+
+.classic-button-secondary:hover {
+    background: var(--surface-2);
+}
+
+/* Pied de page */
+.footer-brand {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
+    margin: 0;
+}
+
+.footer-logo {
+    width: 28px;
+    height: 28px;
+    border-radius: 6px;
+}
+
+@media (max-width: 600px) {
+    header a.brand {
+        margin-right: 0;
+    }
+
+    .brand-hero-logo {
+        width: 110px;
+        height: 110px;
+    }
+
+    .hero-logo {
+        width: 130px;
+        height: 130px;
+    }
+}

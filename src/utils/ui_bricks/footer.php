@@ -31,7 +31,13 @@ class footer
             write_line('    ' . $element);
         }
 
-        write_line(sprintf('  <p>© %d %s</p>', $this->year, htmlspecialchars($this->copyrightText)));
+        write_line(sprintf(
+            '  <p class="footer-brand"><a href="/"><img class="footer-logo" src="%s" width="28" height="28" alt="Logo %s"></a><span>© %d %s</span></p>',
+            htmlspecialchars(LOGO_URL),
+            htmlspecialchars(SITE_NAME),
+            $this->year,
+            htmlspecialchars($this->copyrightText)
+        ));
         write_line('</footer>');
         write_line('</body>');
         write_line('</html>');

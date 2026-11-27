@@ -3,6 +3,7 @@
 const SITE_NAME = 'Stack Games';
 const CHARSET = 'UTF-8';
 const BASE_URL = '';
+const LOGO_URL = BASE_URL . '/assets/logo_stackGame_icon.png';
 
 enum Language: string {
     case FRENCH = 'fr';
