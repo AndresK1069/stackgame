@@ -73,6 +73,10 @@ class UserController {
 
         $errors = $this->validate_subscription($login, $password, $passwordConfirm, $name, $firstname);
 
+        if (!$this->verify_recaptcha()) {
+            $errors[] = "Veuillez valider le captcha.";
+        }
+
         if (empty($errors) && $this->user_model->login_exists($login)) {
             $errors[] = "Un compte existe déjà avec cet email.";
         }
@@ -115,6 +119,34 @@ class UserController {
             $errors[] = "nom ou prénom vide";
         }
         return $errors;
+    }
+
+    private function verify_recaptcha(): bool {
+        $token = $_POST['g-recaptcha-response'] ?? '';
+        if ($token === '') {
+            return false;
+        }
+
+        $ch = curl_init('https://www.google.com/recaptcha/api/siteverify');
+        curl_setopt_array($ch, [
+            CURLOPT_POST           => true,
+            CURLOPT_POSTFIELDS     => http_build_query([
+                'secret'   => RECAPTCHA_SECRET,
+                'response' => $token,
+                'remoteip' => $_SERVER['REMOTE_ADDR'] ?? '',
+            ]),
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_TIMEOUT        => 5,
+        ]);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        if ($response === false) {
+            return false;
+        }
+
+        $data = json_decode($response, true);
+        return ($data['success'] ?? false) === true;
     }
 
     private function get_user_from_login_password(string $login, string $password) {

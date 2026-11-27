@@ -4,6 +4,9 @@ require_once __DIR__ . '/../utils/ui_bricks/header.php';
 require_once __DIR__ . '/../utils/ui_bricks/footer.php';
 require_once __DIR__.'/../utils/core_bricks/form/Form.php';
 require_once __DIR__.'/../utils/core_bricks/form/FormElement.php';
+require_once __DIR__.'/../utils/core_bricks/utils.php';
+
+use function Utils\write_line;
 
 $errors    ??= [];
 $login     ??= '';
@@ -65,6 +68,14 @@ $form->addElement(new FormElement(
     value: "S'inscrire",
     attributes: ["class" => "classic-button", "style" => "color: #121212;"]
 ));
+
+$form->addElement(new FormElement(
+        name: "captcha",
+        type: ElementType::HTML,
+        value: '<div class="g-recaptcha" data-sitekey="' . htmlspecialchars(RECAPTCHA_SITE_KEY, ENT_QUOTES, 'UTF-8') . '"></div>'
+));
+
+write_line('<script src="https://www.google.com/recaptcha/api.js" async defer></script>');
 
 $form->render();
 ?>
