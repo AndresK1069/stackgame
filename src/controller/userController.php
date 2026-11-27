@@ -48,7 +48,7 @@ class UserController {
                 include __DIR__ . "/../view/stats.php";
             }
             else {
-                header('Location: /');
+                include __DIR__ . "/../view/profile.php";
             }
         }
         else {
@@ -83,7 +83,7 @@ class UserController {
         }
 
         $this->user_model->add_user($login, $password, $name, $firstname);
-        header('Location: /');
+        $this->submitLogin();
         exit;
     }
 

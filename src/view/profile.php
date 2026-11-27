@@ -10,6 +10,7 @@ $header->render();
 $navbar = new Navbar("navbar");
 if (isset($_SESSION['user_id'])) {
     $navbar->addItem(new NavItem("/logout", "Se déconnecter"));
+    $navbar->addItem(new NavItem("/", "Retour à l'accueil"));
 }
 ?>
 
